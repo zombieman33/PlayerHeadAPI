@@ -1,0 +1,5 @@
+name: PlayerHeadAPI
+version: '${project.version}'
+author: zombieman
+main: me.zombieman.dev.playerheadapi.PlayerHeadAPI
+api-version: '1.20'
