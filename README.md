@@ -5,7 +5,7 @@
 PlayerHeadAPI is a Minecraft plugin designed to send player heads as images in chat. It leverages Minecraft avatars and displays them in the chat using various shades or characters, allowing for a highly customizable in-game experience.
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/zombieman33/PlayerHeadAPI)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Server-blue?style=for-the-badge&logo=discord)](https://discord.gg/your-invite-code)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Server-blue?style=for-the-badge&logo=discord)](https://discord.gg/SuypvRBa4c)
 
 ## Features
 
