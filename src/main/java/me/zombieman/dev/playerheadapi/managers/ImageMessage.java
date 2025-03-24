@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class ImageMessage {
     private static final char TRANSPARENT_CHAR = '#';
-    private net.kyori.adventure.text.Component[] lines;
+    private Component[] lines;
 
     public ImageMessage(BufferedImage image, int height, char imgChar) {
         String[][] rgbColors = this.toRGBArray(image, height);
@@ -24,16 +24,16 @@ public class ImageMessage {
         this.lines = this.toImgMessage(rgbColors, imgChar);
     }
 
-    public ImageMessage(net.kyori.adventure.text.Component... imgLines) {
+    public ImageMessage(Component... imgLines) {
         this.lines = imgLines;
     }
 
-    public ImageMessage appendText(net.kyori.adventure.text.Component... text) {
-        net.kyori.adventure.text.Component[] newLines = new net.kyori.adventure.text.Component[Math.max(this.lines.length, text.length)];
+    public ImageMessage appendText(Component... text) {
+        Component[] newLines = new Component[Math.max(this.lines.length, text.length)];
         for (int y = 0; y < newLines.length; ++y) {
-            net.kyori.adventure.text.Component imageLine = y < this.lines.length ? this.lines[y] : net.kyori.adventure.text.Component.empty();
-            net.kyori.adventure.text.Component textLine = y < text.length ? text[y] : net.kyori.adventure.text.Component.empty();
-            newLines[y] = imageLine.append(net.kyori.adventure.text.Component.text(" ")).append(textLine);
+            Component imageLine = y < this.lines.length ? this.lines[y] : Component.empty();
+            Component textLine = y < text.length ? text[y] : Component.empty();
+            newLines[y] = imageLine.append(Component.text(" ")).append(textLine);
         }
         this.lines = newLines;
         return this;
@@ -57,8 +57,8 @@ public class ImageMessage {
         return rgbImg;
     }
 
-    private net.kyori.adventure.text.Component[] toImgMessage(String[][] colors, char imgchar) {
-        net.kyori.adventure.text.Component[] lines = new net.kyori.adventure.text.Component[colors[0].length];
+    private Component[] toImgMessage(String[][] colors, char imgchar) {
+        Component[] lines = new Component[colors[0].length];
         MiniMessage miniMessage = MiniMessage.miniMessage();
 
         for (int y = 0; y < colors[0].length; ++y) {
@@ -85,23 +85,23 @@ public class ImageMessage {
         return operation.filter(originalImage, null);
     }
 
-    public net.kyori.adventure.text.Component[] getLines() {
+    public Component[] getLines() {
         return this.lines;
     }
 
     public void broadcast() {
-        for (net.kyori.adventure.text.Component line : this.lines) {
+        for (Component line : this.lines) {
             Bukkit.broadcast(line);
         }
     }
 
     public void sendPlayer(Player p) {
-        for (net.kyori.adventure.text.Component line : this.lines) {
+        for (Component line : this.lines) {
             p.sendMessage(line);
         }
     }
 
-    public net.kyori.adventure.text.Component get() {
+    public Component get() {
         for (Component line : this.lines) {
             return line;
         }
