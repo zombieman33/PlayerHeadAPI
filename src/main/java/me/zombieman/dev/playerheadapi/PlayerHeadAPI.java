@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.net.URLConnection;
 
 public final class PlayerHeadAPI extends JavaPlugin {
 
@@ -43,7 +44,10 @@ public final class PlayerHeadAPI extends JavaPlugin {
         try {
             see.sendMessage("");
             URL url = new URL("https://mc-heads.net/avatar/" + name + "/" + size + ".png");
-            BufferedImage bi = ImageIO.read(url);
+
+            URLConnection connection = url.openConnection();
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            BufferedImage bi = ImageIO.read(connection.getInputStream());
 
             // Convert the BufferedImage to an image message
             ImageMessage imageMessage = new ImageMessage(bi, size, imgChar);
@@ -53,7 +57,7 @@ public final class PlayerHeadAPI extends JavaPlugin {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error by sending Player Head");
+            System.out.println("Error sending Player Head");
         }
     }
     public enum ImageChar {
