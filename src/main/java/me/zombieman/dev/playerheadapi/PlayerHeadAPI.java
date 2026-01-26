@@ -3,6 +3,7 @@ package me.zombieman.dev.playerheadapi;
 import me.zombieman.dev.playerheadapi.managers.ImageMessage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,29 +37,31 @@ public final class PlayerHeadAPI extends JavaPlugin {
         return imageMessageInstance;
     }
 
-    public static Component coloredString(String message) {
+    public Component coloredString(String message) {
         return MiniMessage.miniMessage().deserialize(message);
     }
 
-    public static void sendPlayerHeadWithMessage(String name, int size, Player see, char imgChar, Component[] messageLines) {
-        try {
-            see.sendMessage("");
-            URL url = new URL("https://mc-heads.net/avatar/" + name + "/" + size + ".png");
+    public void sendPlayerHeadWithMessage(String name, int size, Player see, char imgChar, Component[] messageLines) {
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                see.sendMessage("");
+                URL url = new URL("https://mc-heads.net/avatar/" + name + "/" + size + ".png");
 
-            URLConnection connection = url.openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            BufferedImage bi = ImageIO.read(connection.getInputStream());
+                URLConnection connection = url.openConnection();
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+                BufferedImage bi = ImageIO.read(connection.getInputStream());
 
-            // Convert the BufferedImage to an image message
-            ImageMessage imageMessage = new ImageMessage(bi, size, imgChar);
-            imageMessage.appendText(messageLines);
-            imageMessage.sendPlayer(see);
-            see.sendMessage("");
+                // Convert the BufferedImage to an image message
+                ImageMessage imageMessage = new ImageMessage(bi, size, imgChar);
+                imageMessage.appendText(messageLines);
+                imageMessage.sendPlayer(see);
+                see.sendMessage("");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error sending Player Head");
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error sending Player Head");
+            }
+        });
     }
     public enum ImageChar {
         BLOCK('⬛'),
